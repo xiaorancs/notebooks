@@ -11,7 +11,7 @@
 #include <assert.h>
 #include <math.h>
 
-namespace StatsMethod {
+namespace cat {
 
     /** 0-1损失函数 **/
     template<typename T>
