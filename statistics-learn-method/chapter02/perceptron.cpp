@@ -5,7 +5,7 @@
 
 #include "../common/utils.h"
 #include "../common/common.h"
-#include "preceptron.h"
+#include "perceptron.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -37,7 +37,7 @@ int main()
 	
 	algo::TT<double, int> tt = algo::train_test_split(data, y);
 	
-	clf.train(tt.train_datas, tt.train_labels);
+	clf.train_v(tt.train_datas, tt.train_labels);
 	
 	clf.eval(tt.test_datas, tt.test_labels);
 

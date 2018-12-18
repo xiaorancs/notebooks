@@ -36,9 +36,25 @@ namespace algo {
 
     // ans = a * c (矩阵相乘)
     template<typename T>
-    void matrix_malt(const std::vector<std::vector<T> > a, const std::vector<std::vector<T> > b, const std::vector<std::vector<T> > &ans) {
+    std::vector<std::vector<T> > matrix_mul(const std::vector<std::vector<T> > a, const std::vector<std::vector<T> > b) {
+		int row_a = a.size();
+		int col_a = a[0].size();
+		int row_b = b.size();
+		int col_b = b[0].size();
+		assert(col_a == row_b);
+		std::vector<std::vector<T> > ans(row_a, std::vector<T>(col_b, 0));
 
+		for(int i = 0; i < row_a; i++) {
+			for(int j = 0; j < col_b; j++) {
+				double t = 0;
+				for(int k = 0; k < col_a; k++) {
+					ans[i][j] += a[i][k] * a[k][j];
+				}
+			}
+		}
+		return ans;
     }
+	
 
     template<typename T>
     double dot_mult(const std::vector<T> a, const std::vector<T> b) {
@@ -52,6 +68,23 @@ namespace algo {
         }
         return sum;
     }
+
+	// get gram matrix
+    template<typename T>
+    std::vector<std::vector<T> > gram_mat(const std::vector<std::vector<T> > a) {
+		int row_a = a.size();
+		int col_a = a[0].size();
+		std::vector<std::vector<double> > ans(row_a, std::vector<T>(row_a, 0));
+
+		for(int i = 0; i < row_a; i++) {
+			for(int j = 0; j < row_a; j++) {
+				ans[i][j] = dot_mult(a[i], a[j]);
+			}
+		}
+		return ans;
+    }
+
+
 
     // 随机初始化到0-1之间的函数
     template<typename T>

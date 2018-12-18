@@ -105,8 +105,56 @@ public:
 
     /**训练模型，使用对偶算法**/
     template<typename T>
-    void train_v(std::vector<std::vector<T> > &X, std::vector<int> &y) {
-        
+    void train_v(std::vector<std::vector<T> > X, std::vector<int> y) {
+ 		std::vector<std::vector<T> > gram = algo::gram_mat(X);
+		
+		std::vector<T> a_u(X.size(), 0);
+        double b_u = algo::random();
+        // 使用随机函数重新赋值
+        algo::normal_random(a_u);
+		// 打乱数据
+        if(shuffle == true) {
+            algo::shuffle(X, y);
+        }
+
+        bool all_correct = false;
+        int iter = 0;
+        double pre_loss = 100.0, loss = 0.0;
+        while(iter < max_iter && fabs(loss - pre_loss) >= tol) {
+            pre_loss = loss;
+            // 随机选择一个数据
+            loss = 0.0;
+			all_correct = true;
+			
+			for(int i = 0; i < X.size(); i++) {
+				double temp = 0.0;
+				
+				for(int j = 0; j < X.size(); j++) {
+					temp += y[j] * a_u[j] * gram[j][i];
+				}
+				temp += b;
+
+				if(temp <= 0) { // 存在错误分类的点
+                	loss -= temp;
+                	// 更新参数
+               	 	a_u[i] = a_u[i] + eta;
+                	b_u = b_u + eta * y[i];
+            		all_correct = false;
+				}
+			}
+			
+			// 所有都正确分类
+			if(all_correct) {
+				break;
+			}
+
+            iter ++;
+            if(verbose > 0 && iter % verbose == 0) {
+                printf("Iter %d, current avg loss: %.5lf. \n", iter, loss / y.size());
+            }
+        }
+        w = a_u;
+        b = b_u;
     }
 
     /**预测结果**/
