@@ -5,9 +5,14 @@
 ## contents
 ### charter 1
 1. 所有的损失函数的实现，分别是C++和Python代码。
+2. metrics.cpp && metrics.py
+3. 整理学习笔记
 
 ### charter 2
+1. 整理学习笔记，目录在../notes
+2. 使用感知机的所有代码，分别是C++和Python代码
 
+### charter 3
 
 
 ## Environment
