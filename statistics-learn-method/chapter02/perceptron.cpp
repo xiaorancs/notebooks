@@ -37,8 +37,11 @@ int main()
 	
 	algo::TT<double, int> tt = algo::train_test_split(data, y);
 	
-	clf.train_v(tt.train_datas, tt.train_labels);
+	clf.train(tt.train_datas, tt.train_labels);
 	
+	// 使用对偶方式训练
+	// clf.train_v(tt.train_datas, tt.train_labels);
+
 	clf.eval(tt.test_datas, tt.test_labels);
 
 	return 0;
